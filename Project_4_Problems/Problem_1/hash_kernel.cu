@@ -3,6 +3,7 @@
 /* Generate Hash ----------------------------------------- //
 *   Generates a hash value from a nonce and transaction list.
 */
+__global__
 unsigned int my_generate_hash(unsigned int nonce, unsigned int index, unsigned int* transactions, unsigned int n_transactions) {
 
     unsigned int hash = (nonce + transactions[0] * (index + 1)) % MAX;
