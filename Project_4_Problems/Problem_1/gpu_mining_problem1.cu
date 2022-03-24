@@ -12,6 +12,7 @@
 
 #include "support.h"
 #include "hash_kernel.cu"
+#include "nonce_kernel.cu"
 
 // to activate debug statements
 #define DEBUG 1
@@ -103,10 +104,10 @@ int main(int argc, char* argv[]) {
     hash_kernel <<< dimGrid, dimBlock >>> (
         device_hash_array,
         nonce_array,
+        trials,
         transactions, 
         n_transactions,            
-        MAX,                
-        );
+        MAX);
     cuda_ret = cudaDeviceSynchronize();
     err_check(cuda_ret, (char*)"Unable to launch hash kernel!", 2);
 
