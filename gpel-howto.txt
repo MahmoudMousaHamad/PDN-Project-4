@@ -18,6 +18,8 @@ There are 6 machines. Each has an address:
 !) MAC/Linux users:
    Simply ssh into the machines.
 	1) ssh into Your4x4@gpelX.cs.nor.ou.edu
+		a) ssh mous0003@gpel12.cs.nor.ou.edu
+		b) IWillBuyACarForMomInshaallah!
 	2) Enter in your password to login!
 	Ex. An example student might use: "ssh roux0011@gpelX.cs.nor.ou.edu"
 

@@ -26,6 +26,6 @@ run:
 # ------------------------------------------------------------------------------- #
 
 make_serial:
-	gcc -fopenmp -g -Wall -o serial_mining serial_mining.c -lm -std=c99
+	gcc -fopenmp -g -Wall -o ../serial_mining serial_mining.c -lm -std=c99
 clean:
 	$(RM) serial_mining

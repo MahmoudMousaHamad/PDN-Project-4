@@ -33,11 +33,15 @@ run:
 gpu_mining_starter.o: gpu_mining_starter.cu nonce_kernel.cu hash_kernel.cu support.h
 	$(NVCC) -c -o $@ gpu_mining_starter.cu $(NVCC_FLAGS)
 
+gpu_mining_problem1.o: gpu_mining_problem1.cu nonce_kernel.cu hash_kernel.cu support.h
+	$(NVCC) -c -o $@ gpu_mining_problem1.cu $(NVCC_FLAGS)
+
 support.o: support.cu support.h
 	$(NVCC) -c -o $@ support.cu $(NVCC_FLAGS)
 
 $(EXE): $(OBJ)
 	$(NVCC) $(OBJ) -o $(EXE) $(LD_FLAGS)
+	$(NVCC) gpu_mining_problem1.o support.o -o ./gpu_mining_problem1 $(LD_FLAGS)
 
 clean:
 	rm -rf *.o $(EXE)

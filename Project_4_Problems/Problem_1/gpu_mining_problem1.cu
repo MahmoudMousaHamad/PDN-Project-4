@@ -13,7 +13,6 @@
 #include "support.h"
 #include "hash_kernel.cu"
 #include "nonce_kernel.cu"
-#include "reduction_kernel.cu"
 
 // to activate debug statements
 #define DEBUG 1
@@ -96,6 +95,35 @@ int main(int argc, char* argv[]) {
 
     // ------ Step 2: Generate the hash values ------ //
 
+    // Problem 1: perform this hash generation in the GPU
+    unsigned int* device_hash_array;
+    cuda_ret = cudaMalloc((void**)&device_hash_array, trials * sizeof(unsigned int));
+    err_check(cuda_ret, (char*)"Unable to allocate hashes to device memory!", 1);
+
+    // Launch the hash kernel
+    hash_kernal <<< dimGrid, dimBlock >>> (
+        device_hash_array,
+        nonce_array,
+        trials,
+        transactions, 
+        n_transactions,            
+        MAX,                
+        );
+    cuda_ret = cudaDeviceSynchronize();
+    err_check(cuda_ret, (char*)"Unable to launch hash kernel!", 2);
+
+    // Get hashes from device memory
+    unsigned int* hash_array = (unsigned int*)calloc(trials, sizeof(unsigned int));
+    cuda_ret = cudaMemcpy(hash_array, device_hash_array, trials * sizeof(unsigned int), cudaMemcpyDeviceToHost);
+    err_check(cuda_ret, (char*)"Unable to read nonce from device memory!", 3);
+
+    // Free memory
+    free(transactions);
+
+    // ------ Step 3: Find the nonce with the minimum hash value ------ //
+
+    // ------ Step 2: Generate the hash values ------ //
+
     unsigned int* hash_array = (unsigned int*)calloc(trials, sizeof(unsigned int));
     for (int i = 0; i < trials; ++i)
         hash_array[i] = generate_hash(nonce_array[i], i, transactions, n_transactions);
@@ -116,16 +144,15 @@ int main(int argc, char* argv[]) {
     }
 
     stopTime(&timer);
-
+    
     // Free memory
     free(nonce_array);
     free(hash_array);
+    
 
     // ----------------------------------------------------------------------------- //
     // -------- Finish Mining ------------------------------------------------------ //
 
-
- 
     // Get if suceeded
     char* res = (char*)malloc(8 * sizeof(char));
     if (min_hash < TARGET)  res = (char*)"Success!";

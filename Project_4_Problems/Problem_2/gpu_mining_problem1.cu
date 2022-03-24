@@ -96,36 +96,51 @@ int main(int argc, char* argv[]) {
 
     // ------ Step 2: Generate the hash values ------ //
 
-    unsigned int* hash_array = (unsigned int*)calloc(trials, sizeof(unsigned int));
-    for (int i = 0; i < trials; ++i)
-        hash_array[i] = generate_hash(nonce_array[i], i, transactions, n_transactions);
+    // Problem 1: perform this hash generation in the GPU
+    unsigned int* device_hash_array;
+    cuda_ret = cudaMalloc((void**)&device_hash_array, trials * sizeof(unsigned int));
+    err_check(cuda_ret, (char*)"Unable to allocate hashes to device memory!", 1);
 
+    // Launch the hash kernel
+    hash_kernal <<< dimGrid, dimBlock >>> (
+        device_hash_array,
+        nonce_array,
+        trials,
+        transactions, 
+        n_transactions,            
+        MAX,                
+        );
+    cuda_ret = cudaDeviceSynchronize();
+    err_check(cuda_ret, (char*)"Unable to launch hash kernel!", 2);
+
+    // Get hashes from device memory
+    unsigned int* hash_array = (unsigned int*)calloc(trials, sizeof(unsigned int));
+    cuda_ret = cudaMemcpy(hash_array, device_hash_array, trials * sizeof(unsigned int), cudaMemcpyDeviceToHost);
+    err_check(cuda_ret, (char*)"Unable to read nonce from device memory!", 3);
 
     // Free memory
     free(transactions);
 
     // ------ Step 3: Find the nonce with the minimum hash value ------ //
 
+    // Problem 2: find the minimum in the GPU by reduction
+    // Perform the reduction on GPU in parallel using the tree reduction
+    // pattern and transfer the scalar results to the system memory
+
     unsigned int min_hash  = MAX;
     unsigned int min_nonce = MAX;
-    for(int i = 0; i < trials; i++){
-        if(hash_array[i] < min_hash){
-            min_hash  = hash_array[i];;
-            min_nonce = nonce_array[i];;
-        }
-    }
-
-    stopTime(&timer);
+    
+    findMin(hash_array, nonce_array, trials, &min_hash, &min_nonce);
 
     // Free memory
     free(nonce_array);
     free(hash_array);
 
+    stopTime(&timer);
     // ----------------------------------------------------------------------------- //
     // -------- Finish Mining ------------------------------------------------------ //
 
 
- 
     // Get if suceeded
     char* res = (char*)malloc(8 * sizeof(char));
     if (min_hash < TARGET)  res = (char*)"Success!";
