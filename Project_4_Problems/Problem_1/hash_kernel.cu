@@ -1,3 +1,4 @@
+#define MAX     123123123
 
 /* Generate Hash ----------------------------------------- //
 *   Generates a hash value from a nonce and transaction list.
@@ -22,7 +23,7 @@ void hash_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsigned i
     unsigned int index = blockDim.x * blockIdx.x + threadIdx.x;
 
     if (index < array_size) {
-        hash_array[index] = generate_hash(nonce_array[i], i, transactions, n_transactions) % mod;
+        hash_array[index] = generate_hash(nonce_array[index], index, transactions, n_transactions) % mod;
     }
 
 } // End Hash Kernel //

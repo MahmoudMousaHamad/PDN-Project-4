@@ -123,8 +123,6 @@ int main(int argc, char* argv[]) {
     // ----------------------------------------------------------------------------- //
     // -------- Finish Mining ------------------------------------------------------ //
 
-
- 
     // Get if suceeded
     char* res = (char*)malloc(8 * sizeof(char));
     if (min_hash < TARGET)  res = (char*)"Success!";
@@ -149,46 +147,6 @@ int main(int argc, char* argv[]) {
 
     return 0;
 } // End Main -------------------------------------------- //
-
-
-__host__ void findMin(unsigned int* hashes, unsigned int* nonces, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce) {
-    unsigned int * input_hash_d, input_nonce_d, output_hash_d, output_nonce_d;
-
-    cudaMalloc((void**)& input_hash_d, trials * sizeof(unsigned int));
-    cudaMalloc((void**)& input_nonce_d, trials * sizeof(unsigned int));
-    cudaMalloc((void**)& output_hash_d, trials * sizeof(unsigned int));
-    cudaMalloc((void**)& output_nonce_d, trials * sizeof(unsigned int));
-
-    unsigned int numBlocks;
-    unsigned int current_input_size = size;
-
-    while(current_input_size > 1) {
-        numBlocks = ceil(current_input_size / (BLOCK_SIZE * 2.0));
-        reduction_kernel<<<numBlocks, BLOCK_SIZE>>>(input_hash_d, input_nonce_d, output_hash_d, output_nonce_d, current_input_size);
-
-        cudaDeviceSynchronize();
-
-        unsigned int* swap = input_hash_d;
-        input_hash_d = output_hash_d;
-        output_hash_d = swap;
-
-        swap = input_nonce_d;
-        input_nonce_d = output_nonce_d;
-        output_nonce_d = swap;
-
-        current_input_size = numBlocks;
-    } 
-
-    cudaMemcpy(min_hash, input_hash_d, sizeof(unsigned int), cudaMemcpyDeviceToHost);
-    cudaMemcpy(min_nonce, input_nonce_d, sizeof(unsigned int), cudaMemcpyDeviceToHost);
-    
-    cudaFree(input_hash_d);
-    cudaFree(input_nonce_d);
-    cudaFree(output_hash_d);
-    cudaFree(output_nonce_d);
-}
-
-
 
 /* Generate Hash ----------------------------------------- //
 *   Generates a hash value from a nonce and transaction list.
