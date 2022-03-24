@@ -104,7 +104,6 @@ int main(int argc, char* argv[]) {
     hash_kernal <<< dimGrid, dimBlock >>> (
         device_hash_array,
         nonce_array,
-        trials,
         transactions, 
         n_transactions,            
         MAX,                
@@ -148,7 +147,7 @@ int main(int argc, char* argv[]) {
     // Free memory
     free(nonce_array);
     free(hash_array);
-    
+
 
     // ----------------------------------------------------------------------------- //
     // -------- Finish Mining ------------------------------------------------------ //
