@@ -39,7 +39,7 @@ gpu_mining_problem1.o: gpu_mining_problem1.cu nonce_kernel.cu hash_kernel.cu sup
 support.o: support.cu support.h
 	$(NVCC) -c -o $@ support.cu $(NVCC_FLAGS)
 
-$(EXE): $(OBJ)
+$(EXE): $(OBJ) gpu_mining_problem1.o
 	$(NVCC) $(OBJ) -o $(EXE) $(LD_FLAGS)
 	$(NVCC) gpu_mining_problem1.o support.o -o ./gpu_mining_problem1 $(LD_FLAGS)
 
