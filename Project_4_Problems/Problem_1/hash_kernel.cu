@@ -10,7 +10,7 @@ void hash_kernel(unsigned int* hash_array, unsigned int* nonce, unsigned int arr
     unsigned int index = blockDim.x * blockIdx.x + threadIdx.x;
 
     if (index < array_size) {
-        unsigned int hash = (nonce + transactions[0] * (index + 1)) % mod;
+        unsigned int hash = (nonce[index] + transactions[0] * (index + 1)) % mod;
         for(int j = 1; j < n_transactions; j++){
             hash = (hash + transactions[j] * (index + 1)) % mod;
         }
