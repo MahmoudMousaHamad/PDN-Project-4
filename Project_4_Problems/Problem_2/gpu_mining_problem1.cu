@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
     err_check(cuda_ret, (char*)"Unable to allocate hashes to device memory!", 1);
 
     // Launch the hash kernel
-    hash_kernal <<< dimGrid, dimBlock >>> (
+    hash_kernel <<< dimGrid, dimBlock >>> (
         device_hash_array,
         nonce_array,
         trials,
