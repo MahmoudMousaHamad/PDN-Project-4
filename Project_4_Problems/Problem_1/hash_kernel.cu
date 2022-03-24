@@ -1,15 +1,5 @@
 #define MAX     123123123
 
-/* Generate Hash ----------------------------------------- //
-*   Generates a hash value from a nonce and transaction list.
-*/
-__global__
-unsigned int my_generate_hash(unsigned int nonce, unsigned int index, unsigned int* transactions, unsigned int n_transactions) {
-
-    
-
-} // End Generate Hash ---------- //
-
 /* Hash Kernel --------------------------------------
 *       Generates an array of hash values from nonces.
 */
