@@ -3,7 +3,7 @@
 /* Generate Hash ----------------------------------------- //
 *   Generates a hash value from a nonce and transaction list.
 */
-unsigned int generate_hash(unsigned int nonce, unsigned int index, unsigned int* transactions, unsigned int n_transactions) {
+unsigned int my_generate_hash(unsigned int nonce, unsigned int index, unsigned int* transactions, unsigned int n_transactions) {
 
     unsigned int hash = (nonce + transactions[0] * (index + 1)) % MAX;
     for(int j = 1; j < n_transactions; j++){
@@ -23,7 +23,7 @@ void hash_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsigned i
     unsigned int index = blockDim.x * blockIdx.x + threadIdx.x;
 
     if (index < array_size) {
-        hash_array[index] = generate_hash(nonce_array[index], index, transactions, n_transactions) % mod;
+        hash_array[index] = my_generate_hash(nonce_array[index], index, transactions, n_transactions) % mod;
     }
 
 } // End Hash Kernel //
