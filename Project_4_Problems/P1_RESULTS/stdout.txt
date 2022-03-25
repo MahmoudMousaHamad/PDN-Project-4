@@ -1,0 +1,18 @@
+Failure.
+   Min hash:  54
+   Min nonce: 116069285
+   414.526888 seconds
+./run.sh: line 18: 28909 Segmentation fault      (core dumped) $P1/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
+more: stat of ./results/p1_results/time_serial_mining_5000000.csv failed: No such file or directory
+Failure.
+   Min hash:  20
+   Min nonce: 52118822
+   828.947844 seconds
+./run.sh: line 18: 28915 Segmentation fault      (core dumped) $P1/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
+more: stat of ./results/p1_results/time_serial_mining_10000000.csv failed: No such file or directory
+Failure.
+   Min hash:  23
+   Min nonce: 20718523
+   283.184265 seconds
+./run.sh: line 18: 29000 Segmentation fault      (core dumped) $P1/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
+more: stat of ./results/p1_results/time_gpu_mining_starter_5000000.csv failed: No such file or directory
