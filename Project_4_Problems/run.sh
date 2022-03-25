@@ -16,6 +16,7 @@ trials=(5000000 10000000)
 
 for variant in ${variants[@]}; do
     for t in ${trials[@]}; do
+        echo "################ $variant - $t ################"
         out="$P1_RESULTS/out_${variant}_${t}.csv"
         time="$P1_RESULTS/time_${variant}_${t}.csv"
 
