@@ -171,7 +171,10 @@ int main(int argc, char* argv[]) {
 
 
 __host__ void findMin(unsigned int* hashes, unsigned int* nonces, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce) {
-    unsigned int * input_hash_d, input_nonce_d, output_hash_d, output_nonce_d;
+    unsigned int * input_hash_d;
+    unsigned int * input_nonce_d;
+    unsigned int * output_hash_d;
+    unsigned int * output_nonce_d;
 
     cudaMalloc((void**)& input_hash_d, size * sizeof(unsigned int));
     cudaMalloc((void**)& input_nonce_d, size * sizeof(unsigned int));
