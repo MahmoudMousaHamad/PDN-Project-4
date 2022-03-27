@@ -128,6 +128,7 @@ int main(int argc, char* argv[]) {
     unsigned int min_nonce = MAX;
     
     findMin(hash_array, nonce_array, trials, &min_hash, &min_nonce);
+    printf("DEBUG\n");
 
     // Free memory
     free(nonce_array);
@@ -139,7 +140,6 @@ int main(int argc, char* argv[]) {
     free(nonce_array);
     free(hash_array);
 
-    printf("DEBUG\n");
 
     // ----------------------------------------------------------------------------- //
     // -------- Finish Mining ------------------------------------------------------ //
