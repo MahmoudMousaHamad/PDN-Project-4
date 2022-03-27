@@ -24,7 +24,7 @@ void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsig
         hash_reduction[threadIdx.x] = hash_array[index];
         nonce_reduction[threadIdx.x] = nonce_array[index];
     } else {
-        printf("DEBUG: index >= array_size\n");
+        printf("DEBUG: %d >= array_size\n", threadIdx.x);
         hash_reduction[threadIdx.x] = MAX;
         nonce_reduction[threadIdx.x] = MAX;
     }
