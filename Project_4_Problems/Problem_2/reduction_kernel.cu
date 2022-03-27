@@ -24,14 +24,14 @@ void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsig
         hash_reduction[threadIdx.x] = hash_array[index];
         nonce_reduction[threadIdx.x] = nonce_array[index];
     } else {
-        printf("DEBUG: %d >= array_size\n", threadIdx.x);
+        // printf("DEBUG: %d >= array_size\n", threadIdx.x);
         hash_reduction[threadIdx.x] = MAX;
         nonce_reduction[threadIdx.x] = MAX;
     }
 
     if ((index + BLOCK_SIZE) < array_size) {
         if (hash_array[index + BLOCK_SIZE] < hash_reduction[threadIdx.x]) {
-            printf("DEBUG: %d\n", hash_reduction[threadIdx.x]);
+            printf("DEBUG: %d < %d\n", hash_array[index + BLOCK_SIZE], hash_reduction[threadIdx.x]);
             hash_reduction[threadIdx.x] = hash_array[index + BLOCK_SIZE];
             nonce_reduction[threadIdx.x] = nonce_array[index + BLOCK_SIZE];
         }
