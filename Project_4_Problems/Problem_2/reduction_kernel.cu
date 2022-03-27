@@ -17,8 +17,8 @@ __global__
 void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsigned int* out_hash, unsigned int* out_nonce, unsigned int array_size) {
     int index = 2 * blockDim.x * blockIdx.x + threadIdx.x;
 
-    __shared__ float hash_reduction[BLOCK_SIZE];
-    __shared__ float nonce_reduction[BLOCK_SIZE];
+    __shared__ unsigned int hash_reduction[BLOCK_SIZE];
+    __shared__ unsigned int nonce_reduction[BLOCK_SIZE];
 
     if (index < array_size) {
         hash_reduction[threadIdx.x] = hash_array[index];
