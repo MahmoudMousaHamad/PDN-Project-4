@@ -102,6 +102,8 @@ int main(int argc, char* argv[]) {
     unsigned int* device_transactions;
     cuda_ret = cudaMalloc((void**)&device_transactions, n_transactions * sizeof(unsigned int));
     err_check(cuda_ret, (char*)"Unable to allocate transactions to device memory!", 1);
+    cuda_ret = cudaMemcpy(device_transactions, transactions, n_transactions * sizeof(unsigned int), cudaMemcpyHostToDevice);
+    err_check(cuda_ret, (char*)"Unable to copy transactions to device memory!", 1);
 
     // Launch the hash kernel
     hash_kernel <<< dimGrid, dimBlock >>> (
