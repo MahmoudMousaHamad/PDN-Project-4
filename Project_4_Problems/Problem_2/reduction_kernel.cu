@@ -44,7 +44,7 @@ void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsig
     }
 
     if (threadIdx.x == 0) {
-        printf("DEBUG: %d", hash_reduction[0]);
+        printf("DEBUG: %d\n", nonce_reduction[0]);
         *out_hash = hash_reduction[0];
         *out_nonce = nonce_reduction[0];
     }
