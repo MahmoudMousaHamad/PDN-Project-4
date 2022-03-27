@@ -36,7 +36,7 @@ void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsig
     }
 
     for (int stride = 1; stride < BLOCK_SIZE; stride *= 2) {
-        __synchthreads();
+        __syncthreads();
         if (threadIdx.x % (2*stride) == 0) {
             hash_reduction[threadIdx.x] = hash_reduction[threadIdx.x + stride];
             nonce_reduction[threadIdx.x] = nonce_reduction[threadIdx.x + stride];
