@@ -96,20 +96,21 @@ int main(int argc, char* argv[]) {
 
     // ------ Step 2: Generate the hash values ------ //
 
-    // Problem 1: perform this hash generation in the GPU
     unsigned int* device_hash_array;
     cuda_ret = cudaMalloc((void**)&device_hash_array, trials * sizeof(unsigned int));
     err_check(cuda_ret, (char*)"Unable to allocate hashes to device memory!", 1);
+    unsigned int* device_transactions;
+    cuda_ret = cudaMalloc((void**)&device_transactions, n_transactions * sizeof(unsigned int));
+    err_check(cuda_ret, (char*)"Unable to allocate transactions to device memory!", 1);
 
     // Launch the hash kernel
     hash_kernel <<< dimGrid, dimBlock >>> (
         device_hash_array,
-        nonce_array,
+        device_nonce_array,
         trials,
-        transactions, 
+        device_transactions, 
         n_transactions,            
-        MAX,                
-        );
+        MAX);
     cuda_ret = cudaDeviceSynchronize();
     err_check(cuda_ret, (char*)"Unable to launch hash kernel!", 2);
 
@@ -123,10 +124,6 @@ int main(int argc, char* argv[]) {
 
     // ------ Step 3: Find the nonce with the minimum hash value ------ //
 
-    // Problem 2: find the minimum in the GPU by reduction
-    // Perform the reduction on GPU in parallel using the tree reduction
-    // pattern and transfer the scalar results to the system memory
-
     unsigned int min_hash  = MAX;
     unsigned int min_nonce = MAX;
     
@@ -137,6 +134,12 @@ int main(int argc, char* argv[]) {
     free(hash_array);
 
     stopTime(&timer);
+    
+    // Free memory
+    free(nonce_array);
+    free(hash_array);
+
+
     // ----------------------------------------------------------------------------- //
     // -------- Finish Mining ------------------------------------------------------ //
 
