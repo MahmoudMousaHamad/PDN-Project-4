@@ -2,26 +2,58 @@
 
 TRANSACTIONS="../test_data/Problem 1 and 2/debug_1k.csv"
 N_TRANSACTIONS="1000"
-P1="./Problem_1"
-P1_RESULTS="./results/p1_results"
 
-mkdir -p $P1_RESULTS
+P1="./Problem_1"
+P2="./Problem_2"
+
+P1_RESULTS="./results/p1_results"
+P2_RESULTS="./results/p2_results"
+
+mkdir -p $P1_RESULTS $P2_RESULTS
 
 # Problem 1
-make -C ./Problem_1/
-make -C ./Problem_1/serial
+problem_1() {
+    echo "################ Problem - 1 ################"
+    make -C ./Problem_1/
+    make -C ./Problem_1/serial
 
-variants=("serial_mining" "gpu_mining_starter" "gpu_mining_problem1")
-trials=(5000000 10000000)
+    variants=("serial_mining" "gpu_mining_starter" "gpu_mining_problem1")
+    trials=(5000000 10000000)
 
-for variant in ${variants[@]}; do
-    for t in ${trials[@]}; do
-        echo "################ $variant - $t ################"
-        out="$P1_RESULTS/out_${variant}_${t}.csv"
-        time="$P1_RESULTS/time_${variant}_${t}.csv"
+    for variant in ${variants[@]}; do
+        for t in ${trials[@]}; do
+            echo "################ $variant - $t ################"
+            out="$P1_RESULTS/out_${variant}_${t}.csv"
+            time="$P1_RESULTS/time_${variant}_${t}.csv"
 
-        $P1/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
+            $P1/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
 
-        more $time
+            more $time
+        done
     done
-done
+}
+
+# Problem 2
+problem_2() {
+    echo "################ Problem - 2 ################"
+
+    make -C ./Problem_2/
+    make -C ./Problem_2/serial
+
+    variants=("gpu_mining_problem2")
+    trials=(5000000 10000000)
+
+    for variant in ${variants[@]}; do
+        for t in ${trials[@]}; do
+            echo "################ $variant - $t ################"
+            out="$P2_RESULTS/out_${variant}_${t}.csv"
+            time="$P2_RESULTS/time_${variant}_${t}.csv"
+
+            $P2/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
+
+            more $time
+        done
+    done
+}
+
+problem_2
