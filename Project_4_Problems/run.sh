@@ -38,7 +38,6 @@ problem_2() {
     echo "################ Problem - 2 ################"
 
     make -C ./Problem_2/
-    make -C ./Problem_2/serial
 
     variants=("gpu_mining_problem2")
     trials=(5000000 10000000)
