@@ -127,7 +127,7 @@ int main(int argc, char* argv[]) {
     unsigned int min_hash  = MAX;
     unsigned int min_nonce = MAX;
     
-    findMin(hash_array, nonce_array, trials, &min_hash, &min_nonce);
+    findMin(device_hash_array, device_nonce_array, trials, &min_hash, &min_nonce);
 
     // Free memory
     free(nonce_array);
@@ -165,14 +165,10 @@ int main(int argc, char* argv[]) {
 } // End Main -------------------------------------------- //
 
 
-__host__ void findMin(unsigned int* hashes, unsigned int* nonces, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce) {
-    unsigned int * input_hash_d;
-    unsigned int * input_nonce_d;
+__host__ void findMin(unsigned int* input_hash_d, unsigned int* input_nonce_d, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce) {
     unsigned int * output_hash_d;
     unsigned int * output_nonce_d;
 
-    cudaMalloc((void**)& input_hash_d, size * sizeof(unsigned int));
-    cudaMalloc((void**)& input_nonce_d, size * sizeof(unsigned int));
     cudaMalloc((void**)& output_hash_d, size * sizeof(unsigned int));
     cudaMalloc((void**)& output_nonce_d, size * sizeof(unsigned int));
 
