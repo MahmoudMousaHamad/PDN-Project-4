@@ -14,7 +14,7 @@
 #define MAX     123123123
 
 __global__
-void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsigned int array_size, unsigned int* out_hash, unsigned int* out_nonce) {
+void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsigned int* out_hash, unsigned int* out_nonce, unsigned int array_size) {
     int index = 2 * blockDim.x * blockIdx.x + threadIdx.x;
 
     __shared__ float hash_reduction[BLOCK_SIZE];
