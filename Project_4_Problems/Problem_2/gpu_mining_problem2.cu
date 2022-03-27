@@ -127,6 +127,7 @@ int main(int argc, char* argv[]) {
     unsigned int min_hash  = MAX;
     unsigned int min_nonce = MAX;
     
+    printf("DEBUG\n");
     findMin(hash_array, nonce_array, trials, &min_hash, &min_nonce);
 
     // Free memory
