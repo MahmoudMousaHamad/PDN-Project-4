@@ -29,8 +29,8 @@ void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsig
     }
 
     if ((index + BLOCK_SIZE) < array_size) {
+        printf("DEBUG: %d\n", hash_array[threadIdx.x]);
         if (hash_array[index + BLOCK_SIZE] < hash_reduction[threadIdx.x]) {
-            printf("DEBUG: %d\n", hash_array[index + BLOCK_SIZE]);
             hash_reduction[threadIdx.x] = hash_array[index + BLOCK_SIZE];
             nonce_reduction[threadIdx.x] = nonce_array[index + BLOCK_SIZE];
         }
