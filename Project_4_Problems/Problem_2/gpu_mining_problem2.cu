@@ -30,7 +30,7 @@
 unsigned int generate_hash(unsigned int nonce, unsigned int index, unsigned int* transactions, unsigned int n_transactions);
 void read_file(char* file, unsigned int* transactions, unsigned int n_transactions);
 void err_check(cudaError_t ret, char* msg, int exit_code);
-
+__host__ void findMin(unsigned int* hashes, unsigned int* nonces, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce);
 
 /* Main ------------------ //
 *   This is the main program.
@@ -173,10 +173,10 @@ int main(int argc, char* argv[]) {
 __host__ void findMin(unsigned int* hashes, unsigned int* nonces, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce) {
     unsigned int * input_hash_d, input_nonce_d, output_hash_d, output_nonce_d;
 
-    cudaMalloc((void**)& input_hash_d, trials * sizeof(unsigned int));
-    cudaMalloc((void**)& input_nonce_d, trials * sizeof(unsigned int));
-    cudaMalloc((void**)& output_hash_d, trials * sizeof(unsigned int));
-    cudaMalloc((void**)& output_nonce_d, trials * sizeof(unsigned int));
+    cudaMalloc((void**)& input_hash_d, size * sizeof(unsigned int));
+    cudaMalloc((void**)& input_nonce_d, size * sizeof(unsigned int));
+    cudaMalloc((void**)& output_hash_d, size * sizeof(unsigned int));
+    cudaMalloc((void**)& output_nonce_d, size * sizeof(unsigned int));
 
     unsigned int numBlocks;
     unsigned int current_input_size = size;
