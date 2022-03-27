@@ -20,6 +20,8 @@ void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsig
     __shared__ float hash_reduction[BLOCK_SIZE];
     __shared__ float nonce_reduction[BLOCK_SIZE];
 
+    printf("Index: %d, size: %d\n", index, array_size);
+
     if (index < array_size) {
         hash_reduction[threadIdx.x] = hash_array[index];
         nonce_reduction[threadIdx.x] = nonce_array[index];
