@@ -183,13 +183,12 @@ __host__ void findMin(unsigned int* hashes, unsigned int* nonces, unsigned int s
 
     unsigned int numBlocks;
     unsigned int current_input_size = size;
-    printf("DEBUG\n");
     while(current_input_size > 1) {
         numBlocks = ceil(current_input_size / (BLOCK_SIZE * 2.0));
         reduction_kernel<<<numBlocks, BLOCK_SIZE>>>(input_hash_d, input_nonce_d, output_hash_d, output_nonce_d, current_input_size);
 
         cudaDeviceSynchronize();
-
+        printf("DEBUG\n");
         unsigned int* swap = input_hash_d;
         input_hash_d = output_hash_d;
         output_hash_d = swap;
