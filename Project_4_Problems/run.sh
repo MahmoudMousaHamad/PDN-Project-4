@@ -48,7 +48,7 @@ problem_2() {
             out="$P2_RESULTS/out_${variant}_${t}.csv"
             time="$P2_RESULTS/time_${variant}_${t}.csv"
 
-            $P2/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
+            echo $P2/$variant "$TRANSACTIONS" $N_TRANSACTIONS $t $out $time
 
             more $time
         done
