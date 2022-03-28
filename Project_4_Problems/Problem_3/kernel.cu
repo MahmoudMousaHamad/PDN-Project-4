@@ -1,13 +1,21 @@
+// program constants
+#define BLOCK_SIZE 1024
+
+#define BILLION  1000000000.0
+#define MAX_LINE_LENGTH 25000
+
+#define BLUR_SIZE 2
+
 __global__
-void convolution_kernel(int* A, int* K, int* out, int w, int h) {
+void convolution_kernel(unsigned int* A, unsigned int* K, unsigned int* out, int w, int h) {
     int Col = blockIdx.x * blockDim.x + threadIdx.x;
     int Row = blockIdx.y * blockDim.y + threadIdx.y;
 
     if (Col < w && Row < h) {
         int pixVal = 0;
-        int pixels = 0;
+        // int pixels = 0;
 
-        for (int r = -BLUR_SIZE; row < BLUR_SIZE + 1; ++r) {
+        for (int r = -BLUR_SIZE; r < BLUR_SIZE + 1; ++r) {
             for (int c = -BLUR_SIZE; c < BLUR_SIZE + 1; ++c) {
                 int current_row = Row + r;
                 int current_col = Col + c;
