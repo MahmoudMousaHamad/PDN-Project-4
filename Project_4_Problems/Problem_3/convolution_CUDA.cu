@@ -12,6 +12,7 @@
 #include <time.h>
 #include <cstdio>
 #include <cuda.h>
+#include <iostream>
 
 #include "kernel.cu"
 
