@@ -7,7 +7,7 @@
 #define BLUR_SIZE 2
 
 __global__
-void convolution_kernel(unsigned int* A, unsigned int* K, unsigned int* out, int w, int h) {
+void convolution_kernel(int* A, int* K, int* out, int w, int h) {
     int Col = blockIdx.x * blockDim.x + threadIdx.x;
     int Row = blockIdx.y * blockDim.y + threadIdx.y;
 
