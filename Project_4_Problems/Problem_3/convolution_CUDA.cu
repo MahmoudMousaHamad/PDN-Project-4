@@ -43,7 +43,7 @@ int main (int argc, char *argv[])
     // Get files to read/write 
     FILE* inputFile1 = fopen(argv[3], "r");
     if (inputFile1 == NULL){
-        printf("Could not open file %s",argv[2]);
+        printf("Could not open file %s",argv[3]);
         return EXIT_FAILURE;
     }
     FILE* outputFile = fopen(argv[4], "w");
