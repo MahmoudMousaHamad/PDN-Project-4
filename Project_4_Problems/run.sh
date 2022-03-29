@@ -89,8 +89,8 @@ problem_4() {
 
     $P3/convolution_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
 
-    echo Total time: $(more $time)\n
-    echo Number of lines: $(wc -l $out)\n
+    echo Total time: $(more $time)
+    echo Number of lines: $(wc -l $out)
     # echo Difference: $(diff $out "$test_dir/mat_p4_output.csv")
 }
 
