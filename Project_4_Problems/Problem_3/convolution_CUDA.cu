@@ -148,7 +148,6 @@ int main (int argc, char *argv[])
                         (end.tv_nsec - start.tv_nsec) / BILLION;
     printf("Time to transfer B from device memory: %f\n", time_spent);
 
-
 	// Save output matrix as csv file
     for (int i = 0; i<n_row; i++)
     {
@@ -161,6 +160,7 @@ int main (int argc, char *argv[])
                 fprintf(outputFile, "\n");
         }
     }
+    printf("DEBUG\n");
 
     // Print time
     fprintf(timeFile, "%.20f", time_spent);
