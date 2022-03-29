@@ -32,6 +32,7 @@ int main (int argc, char *argv[])
     if( argc != 6)
     {
         printf("USE LIKE THIS: convolution_CUDA n_row n_col mat_input.csv mat_output.csv time.csv\n");
+        printf("DEBUG: argc: %d\n", argc);
         return EXIT_FAILURE;
     }
 
