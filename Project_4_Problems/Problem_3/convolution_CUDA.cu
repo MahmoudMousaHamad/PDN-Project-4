@@ -150,16 +150,24 @@ int main (int argc, char *argv[])
     printf("Time to transfer B from device memory: %f\n", time_spent);
 
 	// Save output matrix as csv file
+    int stop = 0;
     for (int i = 0; i<n_row; i++)
     {
         for (int j = 0; j<n_col; j++)
         {
-            fprintf(outputFile, "%d", B[i*n_col +j]);
+            int val = B[i*n_col +j];
+            if (val == 0) {
+                stop = 1;
+                break;
+            } else {
+                fprintf(outputFile, "%d", );
+            }
             if (j != n_col -1)
                 fprintf(outputFile, ",");
             else if ( i < n_row-1)
                 fprintf(outputFile, "\n");
         }
+        if (stop) break;
     }
 
     // Print time
