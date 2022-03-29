@@ -31,7 +31,7 @@ int main (int argc, char *argv[])
     // Check console errors
     if( argc != 6)
     {
-        printf("USE LIKE THIS: convolution_serial n_row n_col mat_input.csv mat_output.csv time.csv\n");
+        printf("USE LIKE THIS: convolution_CUDA n_row n_col mat_input.csv mat_output.csv time.csv\n");
         return EXIT_FAILURE;
     }
 
