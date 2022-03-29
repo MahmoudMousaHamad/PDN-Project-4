@@ -15,7 +15,6 @@
 
 #include "kernel.cu"
 
-
 // to activate debug statements
 #define DEBUG 1
 
@@ -24,8 +23,11 @@
 
 #define BILLION  1000000000.0
 #define MAX_LINE_LENGTH 25000
+#define BLOCK_DIM 16
 
 #define BLUR_SIZE 2
+
+void err_check(cudaError_t ret, char* msg, int exit_code);
 
 int main (int argc, char *argv[])
 {
@@ -92,9 +94,8 @@ int main (int argc, char *argv[])
     struct timespec start, end;    
     cudaError_t cuda_ret;
 
-    int num_blocks = ceil((float) (n_row * n_col) / (float)BLOCK_SIZE);
-    dim3 dimGrid(num_blocks, 1, 1);
-    dim3 dimBlock(BLOCK_SIZE, 1, 1);
+    dim3 dimGrid(ceil(n_col/(float)(BLOCK_DIM)), ceil(n_row/(float)(BLOCK_DIM)));
+    dim3 dimBlock(BLOCK_DIM, BLOCK_DIM);
 
     // 1. Transfer the input image (the A matrix) to the device memory 
     clock_gettime(CLOCK_REALTIME, &start);
@@ -116,7 +117,7 @@ int main (int argc, char *argv[])
     double time_spent = (end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec) / BILLION;
 
-    cout << "Time to transfer matrices A and K to device: " << time_spent << '\n';
+    printf("Time to transfer matrices A and K to device: %d\n", time_spent);
 
     // 3. Launch the convolution kernel to compute the filter map (the B matrix) by applying the 
     // convolution to every pixel in the input image. 
@@ -140,18 +141,19 @@ int main (int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &end);
     time_spent = (end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec) / BILLION;
-    cout << "Time to launch convolution and maxpool kernels on device: " << time_spent << '\n';
+    printf("Time to launch convolution and maxpool kernels on device: %d\n", time_spent);
 
     // 4. Transfer the filter map (the B matrix) from the device memory to the system memory. 
     clock_gettime(CLOCK_REALTIME, &start);
 
     cuda_ret = cudaMemcpy(C, C_d, size, cudaMemcpyDeviceToHost);
+    cudaDeviceSynchronize();
     err_check(cuda_ret, (char*)"Unable to read C from device memory!", 3);
 
     clock_gettime(CLOCK_REALTIME, &end);
     time_spent = (end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec) / BILLION;
-    cout << "Time to transfer C from device memory: " << time_spent << '\n';
+    printf("Time to transfer C from device memory: %d\n", time_spent);
 
 	// Save output matrix as csv file
     for (int i = 0; i<n_row; i++)
@@ -180,3 +182,12 @@ int main (int argc, char *argv[])
 
     return 0;
 }
+
+/* Error Check ----------------- //
+*   Exits if there is a CUDA error.
+*/
+void err_check(cudaError_t ret, char* msg, int exit_code) {
+    if (ret != cudaSuccess)
+        fprintf(stderr, "%s \"%s\".\n", msg, cudaGetErrorString(ret)),
+        exit(exit_code);
+} // End Error Check ----------- //

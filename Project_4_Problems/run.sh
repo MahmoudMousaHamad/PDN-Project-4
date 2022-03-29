@@ -77,6 +77,23 @@ problem_3() {
     echo Difference: $(diff $out "$test_dir/mat_p3_output.csv")
 }
 
+problem_3() {
+    echo "################ Problem - 4 ################"
+
+    make -C ./Problem_4/
+
+    test_dir="$TESTS/Problem 4"
+    out="$P4_RESULTS/output_maxpooling.csv"
+    time="$P4_RESULTS/time.csv"
+    dimension=2048
+
+    $P3/convolution_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
+
+    echo Total time: $(more $time)\n
+    echo Number of lines: $(wc -l $out)\n
+    echo Difference: $(diff $out "$test_dir/mat_p4_output.csv")
+}
+
 git pull
 
-problem_3
+problem_4

@@ -20,6 +20,7 @@ void convolution_kernel(int* A, int* K, int* out, int w, int h) {
                 }
             }
         }
+        __syncthreads();
         out[Row * w + Col] = pixVal;
     }
 }
@@ -50,6 +51,7 @@ void maxpooling_kernel(int* B, int* out, int w, int h) {
                 }
             }
         }
+        __syncthreads();
         out[Row * w + Col] = max;
     }
 }
