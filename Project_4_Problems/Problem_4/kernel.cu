@@ -13,9 +13,8 @@ void convolution_kernel(int* A, int* K, int* out, int w, int h) {
 
     if (Col < w && Row < h) {
         int pixVal = 0;
-        int pixels = 0;
 
-        for (int r = -BLUR_SIZE; row < BLUR_SIZE + 1; ++r) {
+        for (int r = -BLUR_SIZE; r < BLUR_SIZE + 1; ++r) {
             for (int c = -BLUR_SIZE; c < BLUR_SIZE + 1; ++c) {
                 int current_row = Row + r;
                 int current_col = Col + c;
