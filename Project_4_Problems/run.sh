@@ -71,7 +71,7 @@ problem_3() {
     time="$P3_RESULTS/time.csv"
     dimension=2048
 
-    echo $P3/convolution_CUDA $dimension $dimension $test_dir/mat_input.csv $out $time
+    $P3/convolution_CUDA $dimension $dimension $test_dir/mat_input.csv $out $time
 }
 
 problem_3
