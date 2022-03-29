@@ -124,7 +124,8 @@ int main (int argc, char *argv[])
 
     clock_gettime(CLOCK_REALTIME, &start);
 
-    int* B_d, C_d;
+    int* B_d;
+    int* C_d;
     cuda_ret = cudaMalloc((void**)&B_d, size);
     err_check(cuda_ret, (char*)"Unable to allocate B to device memory!", 1);
     cuda_ret = cudaMalloc((void**)&C_d, size);

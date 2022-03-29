@@ -40,9 +40,6 @@ void maxpooling_kernel(int* B, int* out, int w, int h) {
     int max = 0;
 
     if (Col < w && Row < h) {
-        int pixVal = 0;
-        int pixels = 0;
-
         for (int r = -BLUR_SIZE; r < BLUR_SIZE + 1; ++r) {
             for (int c = -BLUR_SIZE; c < BLUR_SIZE + 1; ++c) {
                 int current_row = Row + r;
