@@ -153,7 +153,7 @@ int main (int argc, char *argv[])
     {
         for (int j = 0; j<n_col; j++)
         {
-            fprintf(outputFile, "%d", B[i*n_col +j]);
+            printf("%d", B[i*n_col +j]);
             if (j != n_col -1)
                 fprintf(outputFile, ",");
             else if ( i < n_row-1)
