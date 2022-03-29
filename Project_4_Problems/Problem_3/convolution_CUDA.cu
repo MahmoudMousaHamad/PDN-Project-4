@@ -6,24 +6,11 @@
 #include <curand_kernel.h>
 #include <driver_types.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <time.h>
 #include <cstdio>
 #include <cuda.h>
 #include <iostream>
-#include <cuda_runtime_api.h>
-#include <curand_kernel.h>
-#include <driver_types.h>
 #include <curand.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <time.h>
-#include <cstdio>
-#include <cuda.h>
+
 
 #include "kernel.cu"
 
