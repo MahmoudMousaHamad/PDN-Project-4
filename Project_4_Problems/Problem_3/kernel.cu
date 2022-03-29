@@ -29,7 +29,6 @@ void convolution_kernel(int* A, int* K, int* out, int w, int h) {
             }
         }
         __syncthreads();
-        printf("%d, ", pixVal);
         out[Row * w + Col] = pixVal;
     }
 }
