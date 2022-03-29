@@ -91,7 +91,7 @@ problem_4() {
 
     echo Total time: $(more $time)\n
     echo Number of lines: $(wc -l $out)\n
-    echo Difference: $(diff $out "$test_dir/mat_p4_output.csv")
+    # echo Difference: $(diff $out "$test_dir/mat_p4_output.csv")
 }
 
 git pull
