@@ -140,7 +140,8 @@ int main (int argc, char *argv[])
     // 4. Transfer the filter map (the B matrix) from the device memory to the system memory. 
     clock_gettime(CLOCK_REALTIME, &start);
 
-    cuda_ret = cudaMemcpy(B, B_d, size, cudaMemcpyDeviceToHost);
+    cudaMemcpy(B, B_d, size, cudaMemcpyDeviceToHost);
+    cuda_ret = cudaDeviceSynchronize();
     err_check(cuda_ret, (char*)"Unable to read B from device memory!", 3);
 
     clock_gettime(CLOCK_REALTIME, &end);

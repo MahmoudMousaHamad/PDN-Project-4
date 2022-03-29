@@ -28,7 +28,6 @@ void convolution_kernel(int* A, int* K, int* out, int w, int h) {
                 }
             }
         }
-        printf("%d", pixVal);
         out[Row * w + Col] = pixVal;
     }
 }
