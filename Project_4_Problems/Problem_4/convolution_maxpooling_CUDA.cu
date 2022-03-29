@@ -177,7 +177,6 @@ int main (int argc, char *argv[])
     fclose (timeFile);
 
     free(A);
-    free(B);
     free(C);
     free(K);
 
