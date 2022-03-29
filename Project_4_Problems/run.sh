@@ -71,6 +71,8 @@ problem_3() {
     dimension=2048
 
     $P3/convolution_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
+
+    echo $(more $time)
 }
 
 git pull
