@@ -160,7 +160,7 @@ int main (int argc, char *argv[])
                 stop = 1;
                 break;
             } else {
-                fprintf(outputFile, "%d", );
+                fprintf(outputFile, "%d", val);
             }
             if (j != n_col -1)
                 fprintf(outputFile, ",");
