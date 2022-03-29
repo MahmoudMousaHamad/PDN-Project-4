@@ -160,7 +160,6 @@ int main (int argc, char *argv[])
                 fprintf(outputFile, "\n");
         }
     }
-    printf("DEBUG\n");
 
     // Print time
     fprintf(timeFile, "%.20f", time_spent);

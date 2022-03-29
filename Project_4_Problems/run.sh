@@ -9,7 +9,6 @@ P2="./Problem_2"
 P3="./Problem_3"
 P4="./Problem_4"
 
-
 P1_RESULTS="./results/p1_results"
 P2_RESULTS="./results/p2_results"
 P3_RESULTS="./results/p3_results"
