@@ -15,7 +15,7 @@ P2_RESULTS="./results/p2_results"
 P3_RESULTS="./results/p3_results"
 P4_RESULTS="./results/p4_results"
 
-mkdir -p $P1_RESULTS $P2_RESULTS
+mkdir -p $P1_RESULTS $P2_RESULTS $P3_RESULTS $P4_RESULTS
 
 # Problem 1
 problem_1() {
