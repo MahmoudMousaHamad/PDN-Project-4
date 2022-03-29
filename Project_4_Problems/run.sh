@@ -74,7 +74,7 @@ problem_3() {
 
     echo Total time: $(more $time)
 
-    # diff $out "$test_dir/mat_p3_output.csv"
+    diff $out "$test_dir/mat_p3_output.csv"
 }
 
 git pull
