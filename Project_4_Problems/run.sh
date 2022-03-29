@@ -72,7 +72,7 @@ problem_3() {
 
     $P3/convolution_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
 
-    echo $(more $time)
+    echo Total time: $(more $time)
 }
 
 git pull
