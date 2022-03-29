@@ -24,6 +24,8 @@
 
 #define BLUR_SIZE 2
 
+void err_check(cudaError_t ret, char* msg, int exit_code);
+
 int main (int argc, char *argv[])
 {
     // Check console errors
@@ -49,7 +51,7 @@ int main (int argc, char *argv[])
     size_t size = n_row * n_col * sizeof(int);
     // Matrices to use
     int* K = (int*)malloc(5 * 5 * sizeof(int));
-    int* A  = (int*) malloc(size);
+    int* A = (int*) malloc(size);
     int* B = (int*) malloc(size);
 
     // read the data from the file
@@ -172,3 +174,12 @@ int main (int argc, char *argv[])
 
     return 0;
 }
+
+/* Error Check ----------------- //
+*   Exits if there is a CUDA error.
+*/
+void err_check(cudaError_t ret, char* msg, int exit_code) {
+    if (ret != cudaSuccess)
+        fprintf(stderr, "%s \"%s\".\n", msg, cudaGetErrorString(ret)),
+        exit(exit_code);
+} // End Error Check ----------- //
