@@ -77,7 +77,7 @@ problem_3() {
     echo Difference: $(diff $out "$test_dir/mat_p3_output.csv")
 }
 
-problem_3() {
+problem_4() {
     echo "################ Problem - 4 ################"
 
     make -C ./Problem_4/
