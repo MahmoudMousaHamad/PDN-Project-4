@@ -21,6 +21,7 @@
 
 #define BILLION  1000000000.0
 #define MAX_LINE_LENGTH 25000
+#define BLOCK_DIM 16
 
 #define BLUR_SIZE 2
 
@@ -92,11 +93,9 @@ int main (int argc, char *argv[])
     struct timespec start, end;    
     cudaError_t cuda_ret;
 
-    int num_blocks = ceil((float) (n_row * n_col) / (float)BLOCK_SIZE);
-    dim3 dimGrid(num_blocks, 1, 1);
-    dim3 dimBlock(BLOCK_SIZE, 1, 1);
+    dim3 dimGrid(ceil(n_col/(float)(BLOCK_DIM)), ceil(n_row/(float)(BLOCK_DIM)));
+    dim3 dimBlock(BLOCK_DIM, BLOCK_DIM);
 
-    
     // 1. Transfer the input image (the A matrix) to the device memory 
     clock_gettime(CLOCK_REALTIME, &start);
 
