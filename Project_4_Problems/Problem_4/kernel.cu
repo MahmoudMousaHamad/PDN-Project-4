@@ -1,3 +1,11 @@
+// program constants
+#define BLOCK_SIZE 1024
+
+#define BILLION  1000000000.0
+#define MAX_LINE_LENGTH 25000
+
+#define BLUR_SIZE 2
+
 __global__
 void convolution_kernel(int* A, int* K, int* out, int w, int h) {
     int Col = blockIdx.x * blockDim.x + threadIdx.x;
