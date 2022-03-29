@@ -75,6 +75,8 @@ problem_3() {
     echo Total time: $(more $time)
     tail $out
     echo Number of lines: $(wc -l $out)
+    
+    diff $out "$test_dir/mat_p3_output.csv"
 }
 
 git pull
