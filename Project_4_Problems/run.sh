@@ -87,7 +87,7 @@ problem_4() {
     time="$P4_RESULTS/time.csv"
     dimension=2048
 
-    $P3/convolution_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
+    $P4/convolution_maxpooling_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
 
     echo Total time: $(more $time)
     echo Number of lines: $(wc -l $out)
