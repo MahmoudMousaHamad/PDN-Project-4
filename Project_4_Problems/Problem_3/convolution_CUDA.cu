@@ -11,9 +11,8 @@
 #include <iostream>
 #include <curand.h>
 
-
 #include "kernel.cu"
-
+#include "support.h"
 
 // to activate debug statements
 #define DEBUG 1
@@ -116,7 +115,7 @@ int main (int argc, char *argv[])
     double time_spent = (end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec) / BILLION;
 
-    cout << "Time to transfer matrices A and K to device: " << time_spent << '\n';
+    printf("Time to transfer matrices A and K to device: %f\n", time_spent);
 
     // 3. Launch the convolution kernel to compute the filter map (the B matrix) by applying the 
     // convolution to every pixel in the input image. 
@@ -134,7 +133,7 @@ int main (int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &end);
     time_spent = (end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec) / BILLION;
-    cout << "Time to launch convolution kernel on device: " << time_spent << '\n';
+    printf("Time to launch convolution kernel on device: %f\n", time_spent);
 
     // 4. Transfer the filter map (the B matrix) from the device memory to the system memory. 
     clock_gettime(CLOCK_REALTIME, &start);
@@ -145,7 +144,7 @@ int main (int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &end);
     time_spent = (end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec) / BILLION;
-    cout << "Time to transfer B from device memory: " << time_spent << '\n';
+    printf("Time to transfer B from device memory: %f\n", time_spent);
 
 
 	// Save output matrix as csv file
