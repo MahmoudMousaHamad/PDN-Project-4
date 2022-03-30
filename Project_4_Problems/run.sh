@@ -64,40 +64,54 @@ problem_3() {
     echo "################ Problem - 3 ################"
 
     make -C ./Problem_3/
+    make -C ./Problem_3/serial
 
+    variants=("serial" "CUDA")
     test_dir="$TESTS/Problem 3"
-    out="$P3_RESULTS/output_convolution.csv"
-    time="$P3_RESULTS/time.csv"
     dimension=2048
 
-    $P3/convolution_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
+    for v in ${variants[@]}; do
+        out="$P3_RESULTS/output_convolution_${v}.csv"
+        time="$P3_RESULTS/time_${v}.csv"
 
-    echo Total time: $(more $time)\n
-    echo Number of lines: $(wc -l $out)\n
-    echo Difference: $(diff $out "$test_dir/mat_p3_output.csv")
+        $P3/convolution_$v $dimension $dimension "$test_dir/mat_input.csv" $out $time
+
+        echo "Time for $variant: $(more $time)"
+    done
+
+    # echo Total time: $(more $time)\n
+    # echo Number of lines: $(wc -l $out)\n
+    # echo Difference: $(diff $out "$test_dir/mat_p3_output.csv")
 }
 
 problem_4() {
     echo "################ Problem - 4 ################"
 
     make -C ./Problem_4/
+    make -C ./Problem_4/serial
 
+    variants=("serial" "CUDA")
     test_dir="$TESTS/Problem 4"
-    out="$P4_RESULTS/output_maxpooling.csv"
-    time="$P4_RESULTS/time.csv"
     dimension=2048
 
-    $P4/convolution_maxpooling_CUDA $dimension $dimension "$test_dir/mat_input.csv" $out $time
+    for v in ${variants[@]}; do
+        out="$P4_RESULTS/output_convolution_maxpooling_${v}.csv"
+        time="$P4_RESULTS/time_${v}.csv"
 
-    echo Total time: $(more $time)
-    echo Number of lines: $(wc -l $out)
-    # tail $out
-    echo Difference: $(diff $out "$test_dir/mat_p4_output.csv")
+        $P3/convolution_maxpooling_$v $dimension $dimension "$test_dir/mat_input.csv" $out $time
+
+        echo "Time for $variant: $(more $time)"
+    done
+
+    # echo Total time: $(more $time)
+    # echo Number of lines: $(wc -l $out)
+    # # tail $out
+    # echo Difference: $(diff $out "$test_dir/mat_p4_output.csv")
 }
 
 git pull
 
-problem_1
-problem_2
+# problem_1
+# problem_2
 problem_3
 problem_4

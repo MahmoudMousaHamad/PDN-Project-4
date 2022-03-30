@@ -5,3 +5,21 @@ serial_mining.c         None
 gpu_mining_starter.cu   1                   
 gpu_mining_problem1.cu  1, 2                
 gpu_mining_problem2.cu  1, 2, 3             
+
+
+Problem 3
+
+Implementation                              Wall-clock runtime 
+serial
+Copying data from host to device  
+Launching kernel  
+Copying data from device to host
+
+Problem 4
+
+Implementation                              Wall-clock runtime 
+serial 
+Copying data from host to device  
+Running kernel 1 for convolution  
+Running kernel 2 for max-pooling  
+Copying data from device to host
