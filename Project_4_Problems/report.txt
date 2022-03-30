@@ -1,0 +1,7 @@
+Problem 1 & 2
+
+Implementation          Steps on GPU        5M      10M
+serial_mining.c         None                
+gpu_mining_starter.cu   1                   
+gpu_mining_problem1.cu  1, 2                
+gpu_mining_problem2.cu  1, 2, 3             
