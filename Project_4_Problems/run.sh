@@ -76,7 +76,7 @@ problem_3() {
 
         $P3/convolution_$v $dimension $dimension "$test_dir/mat_input.csv" $out $time
 
-        echo "Time for $variant: $(more $time)"
+        echo "Time for $v: $(more $time)"
     done
 
     # echo Total time: $(more $time)\n
@@ -98,9 +98,9 @@ problem_4() {
         out="$P4_RESULTS/output_convolution_maxpooling_${v}.csv"
         time="$P4_RESULTS/time_${v}.csv"
 
-        $P3/convolution_maxpooling_$v $dimension $dimension "$test_dir/mat_input.csv" $out $time
+        $P4/convolution_maxpooling_$v $dimension $dimension "$test_dir/mat_input.csv" $out $time
 
-        echo "Time for $variant: $(more $time)"
+        echo "Time for $v: $(more $time)s"
     done
 
     # echo Total time: $(more $time)
