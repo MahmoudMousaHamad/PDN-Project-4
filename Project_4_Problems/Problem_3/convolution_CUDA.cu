@@ -97,18 +97,20 @@ int main (int argc, char *argv[])
     dim3 dimBlock(BLOCK_DIM, BLOCK_DIM);
 
     // 1. Transfer the input image (the A matrix) to the device memory 
-    clock_gettime(CLOCK_REALTIME, &start);
-
     int* A_d;
     cuda_ret = cudaMalloc((void**)&A_d, size);
     err_check(cuda_ret, (char*)"Unable to allocate A to device memory!", 1);
-    cuda_ret = cudaMemcpy(A_d, A, size, cudaMemcpyHostToDevice);
-    err_check(cuda_ret, (char*)"Unable to transfer A from Host to Device!", 3);
-
+    
     // 2. Transfer the convolution filter (the K matrix) to the device memory 
     int* K_d;
     cuda_ret = cudaMalloc((void**)&K_d, 5 * 5 * sizeof(int));
     err_check(cuda_ret, (char*)"Unable to allocate K to device memory!", 1);
+    
+    clock_gettime(CLOCK_REALTIME, &start);
+    
+    cuda_ret = cudaMemcpy(A_d, A, size, cudaMemcpyHostToDevice);
+    err_check(cuda_ret, (char*)"Unable to transfer A from Host to Device!", 3);
+
     cuda_ret = cudaMemcpy(K_d, K, 5 * 5 * sizeof(int), cudaMemcpyHostToDevice);
     err_check(cuda_ret, (char*)"Unable to transfer K from Host to Device!", 3);
 
