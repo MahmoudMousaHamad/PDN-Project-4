@@ -10,16 +10,23 @@ gpu_mining_problem2.cu  1, 2, 3
 Problem 3
 
 Implementation                              Wall-clock runtime 
-serial
-Copying data from host to device  
-Launching kernel  
-Copying data from device to host
+serial                                      0.370
+Copying data from host to device            0.0759
+Launching kernel                            0.0100
+Copying data from device to host            0.0494            
+
+Compute-to-global-memory-access ratio estimation: 
+
+1. Compute-device-memory-access ratio is 1 because we have two FLOPs
 
 Problem 4
 
 Implementation                              Wall-clock runtime 
-serial 
-Copying data from host to device  
-Running kernel 1 for convolution  
-Running kernel 2 for max-pooling  
-Copying data from device to host
+serial                                      0.777
+Copying data from host to device            0.00745
+Running kernel 1 for convolution            0.0122 
+Running kernel 2 for max-pooling            0.00704
+Copying data from device to host            0.0495
+
+Compute-to-global-memory-access ratio estimation: 
+Compute-device-memory-access ratio is 2 because we only have one device memory access.

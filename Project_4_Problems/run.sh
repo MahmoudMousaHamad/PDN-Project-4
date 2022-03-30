@@ -113,7 +113,7 @@ problem_4() {
 
 git pull
 
-# problem_1
-# problem_2
+problem_1
+problem_2
 problem_3
 problem_4
