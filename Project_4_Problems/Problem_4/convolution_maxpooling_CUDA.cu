@@ -117,7 +117,7 @@ int main (int argc, char *argv[])
     double time_spent = ((end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec)) / BILLION;
 
-    printf("Time to transfer matrices A and K to device: %d\n", time_spent);
+    printf("Time to transfer matrices A and K to device: %f\n", time_spent);
 
     // 3. Launch the convolution kernel to compute the filter map (the B matrix) by applying the 
     // convolution to every pixel in the input image. 
@@ -142,7 +142,7 @@ int main (int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &end);
     time_spent = ((end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec)) / BILLION;
-    printf("Time to launch convolution and maxpool kernels on device: %d\n", time_spent);
+    printf("Time to launch convolution and maxpool kernels on device: %f\n", time_spent);
 
     // 4. Transfer the filter map (the B matrix) from the device memory to the system memory. 
     clock_gettime(CLOCK_REALTIME, &start);
@@ -154,7 +154,7 @@ int main (int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &end);
     time_spent = ((end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec)) / BILLION;
-    printf("Time to transfer C from device memory: %d\n", time_spent);
+    printf("Time to transfer C from device memory: %f\n", time_spent);
 
 	// Save output matrix as csv file
     for (int i = 0; i<n_row; i++)
