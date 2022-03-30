@@ -1,10 +1,10 @@
 Problem 1 & 2
 
 Implementation          Steps on GPU        5M      10M
-serial_mining.c         None                
-gpu_mining_starter.cu   1                   
-gpu_mining_problem1.cu  1, 2                
-gpu_mining_problem2.cu  1, 2, 3             
+serial_mining.c         None                20.733  41.529
+gpu_mining_starter.cu   1                   17.211  32.641
+gpu_mining_problem1.cu  1, 2                2.7838  5.3783
+gpu_mining_problem2.cu  1, 2, 3             2.9056  5.3990
 
 
 Problem 3
@@ -16,8 +16,7 @@ Launching kernel                            0.0100
 Copying data from device to host            0.0494            
 
 Compute-to-global-memory-access ratio estimation: 
-
-1. Compute-device-memory-access ratio is 1 because we have two FLOPs
+Compute-device-memory-access ratio is 1 because we have two FLOPs
 
 Problem 4
 
