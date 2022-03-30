@@ -71,6 +71,7 @@ problem_3() {
     dimension=2048
 
     for v in ${variants[@]}; do
+        echo "################ $v ################"
         out="$P3_RESULTS/output_convolution_${v}.csv"
         time="$P3_RESULTS/time_${v}.csv"
 
@@ -95,6 +96,7 @@ problem_4() {
     dimension=2048
 
     for v in ${variants[@]}; do
+        echo "################ $v ################"
         out="$P4_RESULTS/output_convolution_maxpooling_${v}.csv"
         time="$P4_RESULTS/time_${v}.csv"
 

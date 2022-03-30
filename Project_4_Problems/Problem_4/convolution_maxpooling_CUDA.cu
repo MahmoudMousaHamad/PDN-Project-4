@@ -114,8 +114,8 @@ int main (int argc, char *argv[])
     err_check(cuda_ret, (char*)"Unable to transfer K from Host to Device!", 3);
 
     clock_gettime(CLOCK_REALTIME, &end);
-    double time_spent = (end.tv_sec - start.tv_sec) +
-                        (end.tv_nsec - start.tv_nsec) / BILLION;
+    double time_spent = ((end.tv_sec - start.tv_sec) +
+                        (end.tv_nsec - start.tv_nsec)) / BILLION;
 
     printf("Time to transfer matrices A and K to device: %d\n", time_spent);
 
@@ -140,8 +140,8 @@ int main (int argc, char *argv[])
     err_check(cuda_ret, (char*)"Unable to launch maxpooling kernel!", 2);
 
     clock_gettime(CLOCK_REALTIME, &end);
-    time_spent = (end.tv_sec - start.tv_sec) +
-                        (end.tv_nsec - start.tv_nsec) / BILLION;
+    time_spent = ((end.tv_sec - start.tv_sec) +
+                        (end.tv_nsec - start.tv_nsec)) / BILLION;
     printf("Time to launch convolution and maxpool kernels on device: %d\n", time_spent);
 
     // 4. Transfer the filter map (the B matrix) from the device memory to the system memory. 
@@ -152,8 +152,8 @@ int main (int argc, char *argv[])
     err_check(cuda_ret, (char*)"Unable to read C from device memory!", 3);
 
     clock_gettime(CLOCK_REALTIME, &end);
-    time_spent = (end.tv_sec - start.tv_sec) +
-                        (end.tv_nsec - start.tv_nsec) / BILLION;
+    time_spent = ((end.tv_sec - start.tv_sec) +
+                        (end.tv_nsec - start.tv_nsec)) / BILLION;
     printf("Time to transfer C from device memory: %d\n", time_spent);
 
 	// Save output matrix as csv file
