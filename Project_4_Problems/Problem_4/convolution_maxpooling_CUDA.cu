@@ -98,18 +98,22 @@ int main (int argc, char *argv[])
     dim3 dimBlock(BLOCK_DIM, BLOCK_DIM);
 
     // 1. Transfer the input image (the A matrix) to the device memory 
-    clock_gettime(CLOCK_REALTIME, &start);
-
     int* A_d;
     cuda_ret = cudaMalloc((void**)&A_d, size);
     err_check(cuda_ret, (char*)"Unable to allocate A to device memory!", 1);
-    cuda_ret = cudaMemcpy(A_d, A, size, cudaMemcpyHostToDevice);
-    err_check(cuda_ret, (char*)"Unable to transfer A from Host to Device!", 3);
 
     // 2. Transfer the convolution filter (the K matrix) to the device memory 
     int* K_d;
     cuda_ret = cudaMalloc((void**)&K_d, 5 * 5 * sizeof(int));
     err_check(cuda_ret, (char*)"Unable to allocate K to device memory!", 1);
+
+
+
+    clock_gettime(CLOCK_REALTIME, &start);
+
+    cuda_ret = cudaMemcpy(A_d, A, size, cudaMemcpyHostToDevice);
+    err_check(cuda_ret, (char*)"Unable to transfer A from Host to Device!", 3);
+
     cuda_ret = cudaMemcpy(K_d, K, 5 * 5 * sizeof(int), cudaMemcpyHostToDevice);
     err_check(cuda_ret, (char*)"Unable to transfer K from Host to Device!", 3);
 
@@ -119,11 +123,11 @@ int main (int argc, char *argv[])
 
     printf("Time to transfer matrices A and K to device: %f\n", time_spent);
 
+
+
+
     // 3. Launch the convolution kernel to compute the filter map (the B matrix) by applying the 
     // convolution to every pixel in the input image. 
-
-    clock_gettime(CLOCK_REALTIME, &start);
-
     int* B_d;
     int* C_d;
     cuda_ret = cudaMalloc((void**)&B_d, size);
@@ -131,9 +135,21 @@ int main (int argc, char *argv[])
     cuda_ret = cudaMalloc((void**)&C_d, size);
     err_check(cuda_ret, (char*)"Unable to allocate C to device memory!", 1);
 
+
+
+    clock_gettime(CLOCK_REALTIME, &start);
+
     convolution_kernel<<< dimGrid, dimBlock >>>(A_d, K_d, B_d, n_col, n_row);
     cuda_ret = cudaDeviceSynchronize();
     err_check(cuda_ret, (char*)"Unable to launch convolution kernel!", 2);
+
+    clock_gettime(CLOCK_REALTIME, &end);
+    time_spent = ((end.tv_sec - start.tv_sec) +
+                        (end.tv_nsec - start.tv_nsec)) / BILLION;
+    printf("Time to launch convolution  kernels on device: %f\n", time_spent);
+
+
+    clock_gettime(CLOCK_REALTIME, &start);
 
     maxpooling_kernel<<< dimGrid, dimBlock >>>(B_d, C_d, n_col, n_row);
     cuda_ret = cudaDeviceSynchronize();
@@ -142,7 +158,9 @@ int main (int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &end);
     time_spent = ((end.tv_sec - start.tv_sec) +
                         (end.tv_nsec - start.tv_nsec)) / BILLION;
-    printf("Time to launch convolution and maxpool kernels on device: %f\n", time_spent);
+    printf("Time to launch maxpool kernels on device: %f\n", time_spent);
+
+
 
     // 4. Transfer the filter map (the B matrix) from the device memory to the system memory. 
     clock_gettime(CLOCK_REALTIME, &start);
