@@ -175,36 +175,26 @@ __host__ void findMin(unsigned int* input_hash_d, unsigned int* input_nonce_d, u
     cudaMalloc((void**)& output_nonce_d, size * sizeof(unsigned int));
 
     unsigned int numBlocks;
-    unsigned int current_input_size = size;
-    while(current_input_size > 1) {
-        numBlocks = ceil(current_input_size / (BLOCK_SIZE * 2.0));
-        reduction_kernel<<<numBlocks, BLOCK_SIZE>>>(input_hash_d, input_nonce_d, output_hash_d, output_nonce_d, current_input_size);
+    
+    numBlocks = ceil(size / (BLOCK_SIZE * 2.0));
+    reduction_kernel<<<numBlocks, BLOCK_SIZE>>>(input_hash_d, input_nonce_d, output_hash_d, output_nonce_d, current_input_size);
 
-        cudaDeviceSynchronize();
-        unsigned int* swap = input_hash_d;
-        input_hash_d = output_hash_d;
-        output_hash_d = swap;
+    cudaDeviceSynchronize();
 
-        swap = input_nonce_d;
-        input_nonce_d = output_nonce_d;
-        output_nonce_d = swap;
+    unsigned int my_min_hash = MAX;
+    unsigned int my_min_nonce = MAX;
 
-        current_input_size = numBlocks;
-    } 
+    for(int i = 0; i < trials; i++){
+        if(hash_array[i] < min_hash){
+            my_min_hash  = hash_array[i];;
+            my_min_nonce = nonce_array[i];;
+        }
+    }
 
     cudaMemcpy(min_hash, input_hash_d, size * sizeof(unsigned int), cudaMemcpyDeviceToHost);
     cudaMemcpy(min_nonce, input_nonce_d, size * sizeof(unsigned int), cudaMemcpyDeviceToHost);
 
-    printf("DEBUG: min hash: %d, min nonce: %d\n", min_hash[0], min_nonce[0]);
-
-    // unsigned int min_hash  = MAX;
-    // unsigned int min_nonce = MAX;
-    // for(int i = 0; i < trials; i++){
-    //     if(hash_array[i] < min_hash){
-    //         min_hash  = hash_array[i];;
-    //         min_nonce = nonce_array[i];;
-    //     }
-    // }
+    printf("DEBUG: min hash: %d, min nonce: %d\n", my_min_hash, my_min_nonce);
 
     cudaFree(input_hash_d);
     cudaFree(input_nonce_d);
