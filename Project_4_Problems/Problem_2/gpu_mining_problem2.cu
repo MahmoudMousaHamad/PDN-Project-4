@@ -130,16 +130,7 @@ int main(int argc, char* argv[]) {
     unsigned int min_nonce = MAX;
     
     findMin(device_hash_array, device_nonce_array, trials, &min_hash, &min_nonce);
-
-    // min_hash  = MAX;
-    // min_nonce = MAX;
-    // for(int i = 0; i < trials; i++){
-    //     if(hash_array[i] < min_hash){
-    //         min_hash  = hash_array[i];;
-    //         min_nonce = nonce_array[i];;
-    //     }
-    // }
-
+    
     // Free memory
     free(nonce_array);
     free(hash_array);
