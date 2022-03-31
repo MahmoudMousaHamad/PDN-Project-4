@@ -45,7 +45,7 @@ void reduction_kernel(unsigned int* hash_array, unsigned int* nonce_array, unsig
     }
 
     if (threadIdx.x == 0 && hash_reduction[0] != 0 && hash_reduction[0] != MAX) {
-        out_hash[threadIdx.x] = hash_reduction[0];
-        out_nonce[threadIdx.x] = nonce_reduction[0];
+        out_hash = hash_reduction[0];
+        out_nonce = nonce_reduction[0];
     }
 }
