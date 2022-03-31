@@ -167,7 +167,7 @@ int main(int argc, char* argv[]) {
 } // End Main -------------------------------------------- //
 
 
-__host__ void findMin(unsigned int* input_hash_d, unsigned int* input_nonce_d, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce) {
+__host__ unsigned int * findMin(unsigned int* input_hash_d, unsigned int* input_nonce_d, unsigned int size, unsigned int* min_hash, unsigned int* min_nonce) {
     unsigned int * output_hash_d;
     unsigned int * output_nonce_d;
 
@@ -192,13 +192,27 @@ __host__ void findMin(unsigned int* input_hash_d, unsigned int* input_nonce_d, u
         current_input_size = numBlocks;
     } 
 
-    cudaMemcpy(min_hash, input_hash_d, sizeof(unsigned int), cudaMemcpyDeviceToHost);
-    cudaMemcpy(min_nonce, input_nonce_d, sizeof(unsigned int), cudaMemcpyDeviceToHost);
-    
+    cudaMemcpy(min_hash, input_hash_d, size * sizeof(unsigned int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(min_nonce, input_nonce_d, size * sizeof(unsigned int), cudaMemcpyDeviceToHost);
+
+    printf("DEBUG: min hash: %d, min nonce: %d\", min_hash[0], min_nounce[0]);
+
+    // unsigned int min_hash  = MAX;
+    // unsigned int min_nonce = MAX;
+    // for(int i = 0; i < trials; i++){
+    //     if(hash_array[i] < min_hash){
+    //         min_hash  = hash_array[i];;
+    //         min_nonce = nonce_array[i];;
+    //     }
+    // }
+
     cudaFree(input_hash_d);
     cudaFree(input_nonce_d);
     cudaFree(output_hash_d);
     cudaFree(output_nonce_d);
+
+    // unsigned int * result = [min_hash[0], min_nounce[0]];
+    // return result;
 }
 
 
