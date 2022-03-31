@@ -195,7 +195,7 @@ __host__ void findMin(unsigned int* input_hash_d, unsigned int* input_nonce_d, u
     cudaMemcpy(min_hash, input_hash_d, size * sizeof(unsigned int), cudaMemcpyDeviceToHost);
     cudaMemcpy(min_nonce, input_nonce_d, size * sizeof(unsigned int), cudaMemcpyDeviceToHost);
 
-    printf("DEBUG: min hash: %d, min nonce: %d\n", min_hash[0], min_nounce[0]);
+    printf("DEBUG: min hash: %d, min nonce: %d\n", min_hash[0], min_nonce[0]);
 
     // unsigned int min_hash  = MAX;
     // unsigned int min_nonce = MAX;
